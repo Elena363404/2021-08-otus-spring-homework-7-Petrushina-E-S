@@ -22,22 +22,22 @@ import static org.mockito.Mockito.*;
 class BookServiceByInputTest {
 
   @MockBean
-  IOService ioService;
+  private IOService ioService;
 
   @Autowired
-  BookService bookService;
-
-  @Autowired
-  AuthorRepository authorRepository;
-
-  @Autowired
-  GenreRepository genreRepository;
+  private BookService bookService;
 
   @MockBean
-  BookRepository bookRepository;
+  private AuthorRepository authorRepository;
 
   @MockBean
-  Shell shell;
+  private GenreRepository genreRepository;
+
+  @MockBean
+  private BookRepository bookRepository;
+
+  @MockBean
+  private Shell shell;
 
   @Test
   @DisplayName("Check notification on create book by input")

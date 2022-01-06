@@ -26,7 +26,7 @@ class GenreServiceByInputTest {
   private GenreService genreService;
 
   @MockBean
-  Shell shell;
+  private Shell shell;
 
   @Test
   @DisplayName("Check notification on create genre by input")

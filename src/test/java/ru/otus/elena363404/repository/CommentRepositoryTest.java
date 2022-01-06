@@ -1,13 +1,11 @@
 package ru.otus.elena363404.repository;
 
 import lombok.val;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.elena363404.domain.Book;
 import ru.otus.elena363404.domain.Comment;
 
@@ -23,9 +21,8 @@ class CommentRepositoryTest {
   private static final long EXISTING_COMMENT_ID = 2L;
   private static final long EXISTING_BOOK_ID = 1;
   private static final long COMMENT_ID_FOR_DELETE = 3;
-  private static final int COMMENT_ID_FOR_UPDATE = 2;
+  private static final long COMMENT_ID_FOR_UPDATE = 2;
   private static final int EXPECTED_NUMBER_OF_COMMENTS = 3;
-  private static final int EXPECTED_QUERIES_COUNT = 23;
 
   @Autowired
   private TestEntityManager em;
@@ -33,13 +30,10 @@ class CommentRepositoryTest {
   @Autowired
   private CommentRepository commentRepository;
 
-  @Autowired
-  private BookRepository bookRepository;
-
   @DisplayName("Add comment in the DB")
   @Test
   void shouldInsertComment() {
-    Comment expectedComment = new Comment(4,"Norm", bookRepository.findById(2).stream().findFirst().orElse(null));
+    Comment expectedComment = new Comment(4,"Norm", em.find(Book.class, 2L));
     commentRepository.save(expectedComment);
     Comment actualComment = commentRepository.findById(expectedComment.getId()).stream().findFirst().orElse(null);
     assertThat(actualComment).isEqualTo(expectedComment);
@@ -57,7 +51,7 @@ class CommentRepositoryTest {
   @DisplayName("Return comment by book ID")
   @Test
   void shouldReturnExpectedCommentByBookId() {
-    Book book = bookRepository.findById(EXISTING_BOOK_ID).stream().findFirst().orElse(null);
+    Book book = em.find(Book.class, EXISTING_BOOK_ID);
     val optionalActualComment = commentRepository.findByBook(book);
     List<Comment> commentList = getCommentListByBookId(EXISTING_BOOK_ID);
 
@@ -67,7 +61,7 @@ class CommentRepositoryTest {
   @DisplayName("Update comment by ID")
   @Test
   void shouldUpdateExpectedCommentById() {
-    Comment newComment = new Comment(COMMENT_ID_FOR_UPDATE, "Comment after update!", bookRepository.findById(2).stream().findFirst().orElse(null));
+    Comment newComment = new Comment(COMMENT_ID_FOR_UPDATE, "Comment after update!", em.find(Book.class, 2L));
     commentRepository.save(newComment);
     Comment updatedComment = commentRepository.findById(COMMENT_ID_FOR_UPDATE).stream().findFirst().orElse(null);
 
@@ -96,7 +90,7 @@ class CommentRepositoryTest {
   }
 
   private List<Comment> getCommentListByBookId(long bookId) {
-    Book book = bookRepository.findById(bookId).stream().findFirst().orElse(null);
+    Book book = em.find(Book.class, bookId);
     List<Comment> commentList = new ArrayList<>();
     commentList.add(new Comment(1, "Good book!", book));
     commentList.add(new Comment(2, "Bad book!",book));

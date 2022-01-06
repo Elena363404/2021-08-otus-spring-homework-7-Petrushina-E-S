@@ -1,15 +1,11 @@
 package ru.otus.elena363404.repository;
 
 import lombok.val;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.elena363404.domain.Author;
 import ru.otus.elena363404.domain.Book;
 import ru.otus.elena363404.domain.Genre;
@@ -23,7 +19,6 @@ class BookRepositoryTest {
 
   private static final long EXISTING_BOOK_ID = 3L;
   private static final int EXPECTED_NUMBER_OF_BOOKS = 5;
-  private static final int EXPECTED_QUERIES_COUNT = 15;
   private static final long BOOK_ID_FOR_DELETE = 2;
 
   @Autowired
@@ -37,7 +32,7 @@ class BookRepositoryTest {
   void shouldInsertBook() {
     Book expectedBook = new Book(6,"BookForTest", new Author(2,"Alexander Pushkin"), new Genre(3,"Novel"));
     bookRepository.save(expectedBook);
-    Book actualBook = bookRepository.findById(expectedBook.getId()).stream().findFirst().orElse(null);
+    Book actualBook = em.find(Book.class, expectedBook.getId());
     assertThat(actualBook).isEqualTo(expectedBook);
   }
 

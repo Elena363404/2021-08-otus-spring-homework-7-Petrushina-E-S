@@ -1,7 +1,6 @@
 package ru.otus.elena363404.repository;
 
 import lombok.val;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ class AuthorRepositoryTest {
 
   private static final long EXISTING_AUTHOR_ID = 3L;
   private static final int EXPECTES_NUMBER_OF_AUTHORS = 5;
-  private static final int EXPECTED_QUERIES_COUNT = 7;
   private static final long AUTHOR_ID_FOR_DELETE = 5;
 
   @Autowired

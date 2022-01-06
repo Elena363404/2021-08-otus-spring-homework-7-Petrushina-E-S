@@ -31,7 +31,7 @@ class CommentServiceByInputTest {
   private CommentService commentService;
 
   @MockBean
-  Shell shell;
+  private Shell shell;
 
   @Test
   @DisplayName("Check notification on create comment by input")

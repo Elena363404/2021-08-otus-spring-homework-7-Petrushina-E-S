@@ -1,13 +1,11 @@
 package ru.otus.elena363404.repository;
 
 import lombok.val;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.elena363404.domain.Genre;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +17,6 @@ class GenreRepositoryTest {
 
   private static final long EXISTING_GENRE_ID = 3L;
   private static final long GENRE_ID_FOR_DELETE = 5;
-  private static final int EXPECTED_QUERIES_COUNT = 1;
   private static final int EXPECTES_NUMBER_OF_GENRES = 5;
 
   @Autowired

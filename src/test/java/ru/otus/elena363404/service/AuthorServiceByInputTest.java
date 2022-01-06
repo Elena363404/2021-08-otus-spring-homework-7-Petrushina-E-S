@@ -25,7 +25,7 @@ class AuthorServiceByInputTest {
   private AuthorService authorService;
 
   @MockBean
-  Shell shell;
+  private Shell shell;
 
   @Test
   @DisplayName("Check notification on create author by input")
