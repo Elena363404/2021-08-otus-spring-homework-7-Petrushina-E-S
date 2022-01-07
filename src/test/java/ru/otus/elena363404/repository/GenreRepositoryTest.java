@@ -30,7 +30,7 @@ class GenreRepositoryTest {
   void shouldInsertGenre() {
     Genre expectedGenre = new Genre(5, "Thriller");
     genreRepository.save(expectedGenre);
-    Genre actualGenre = genreRepository.findById(expectedGenre.getId()).stream().findFirst().orElse(null);
+    Genre actualGenre = em.find(Genre.class, expectedGenre.getId());
     assertThat(actualGenre).usingRecursiveComparison().isEqualTo(expectedGenre);
   }
 
@@ -46,10 +46,10 @@ class GenreRepositoryTest {
   @DisplayName("Delete genre by ID")
   @Test
   void shouldCorrectDeleteGenreById() {
-    Genre genreBeforeDelete = genreRepository.findById(GENRE_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    Genre genreBeforeDelete = em.find(Genre.class, GENRE_ID_FOR_DELETE);
     genreRepository.deleteById(GENRE_ID_FOR_DELETE);
-    em.remove(genreBeforeDelete);
-    Genre genreAfterDelete = genreRepository.findById(GENRE_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    em.flush();
+    Genre genreAfterDelete = em.find(Genre.class, GENRE_ID_FOR_DELETE);
     assertNull(genreAfterDelete);
   }
 

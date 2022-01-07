@@ -35,7 +35,7 @@ class CommentRepositoryTest {
   void shouldInsertComment() {
     Comment expectedComment = new Comment(4,"Norm", em.find(Book.class, 2L));
     commentRepository.save(expectedComment);
-    Comment actualComment = commentRepository.findById(expectedComment.getId()).stream().findFirst().orElse(null);
+    Comment actualComment = em.find(Comment.class, expectedComment.getId());
     assertThat(actualComment).isEqualTo(expectedComment);
   }
 
@@ -63,7 +63,7 @@ class CommentRepositoryTest {
   void shouldUpdateExpectedCommentById() {
     Comment newComment = new Comment(COMMENT_ID_FOR_UPDATE, "Comment after update!", em.find(Book.class, 2L));
     commentRepository.save(newComment);
-    Comment updatedComment = commentRepository.findById(COMMENT_ID_FOR_UPDATE).stream().findFirst().orElse(null);
+    Comment updatedComment = em.find(Comment.class, COMMENT_ID_FOR_UPDATE);
 
     assertThat(newComment).isEqualTo(updatedComment);
   }
@@ -71,11 +71,11 @@ class CommentRepositoryTest {
   @DisplayName("Delete comment by ID")
   @Test
   void shouldCorrectDeleteCommentById() {
-    Comment commentBeforeDelete = commentRepository.findById(COMMENT_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    Comment commentBeforeDelete = em.find(Comment.class, COMMENT_ID_FOR_DELETE);
     assertNotNull(commentBeforeDelete);
     commentRepository.deleteById(COMMENT_ID_FOR_DELETE);
-    em.remove(commentBeforeDelete);
-    Comment commentAfterDelete = commentRepository.findById(COMMENT_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    em.flush();
+    Comment commentAfterDelete = em.find(Comment.class, COMMENT_ID_FOR_DELETE);
     assertNull(commentAfterDelete);
   }
 

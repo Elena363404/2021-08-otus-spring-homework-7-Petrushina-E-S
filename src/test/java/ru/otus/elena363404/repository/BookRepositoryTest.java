@@ -22,7 +22,7 @@ class BookRepositoryTest {
   private static final long BOOK_ID_FOR_DELETE = 2;
 
   @Autowired
-  BookRepository bookRepository;
+  private BookRepository bookRepository;
 
   @Autowired
   private TestEntityManager em;
@@ -48,11 +48,11 @@ class BookRepositoryTest {
   @DisplayName("Delete book by ID")
   @Test
   void shouldCorrectDeleteBookById() {
-    Book bookBeforeDelete = bookRepository.findById(BOOK_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    Book bookBeforeDelete = em.find(Book.class, BOOK_ID_FOR_DELETE);
     assertNotNull(bookBeforeDelete);
     bookRepository.deleteById(BOOK_ID_FOR_DELETE);
-    em.remove(bookBeforeDelete);
-    Book bookAfterDelete = bookRepository.findById(BOOK_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    em.flush();
+    Book bookAfterDelete = em.find(Book.class, BOOK_ID_FOR_DELETE);
     assertNull(bookAfterDelete);
   }
 

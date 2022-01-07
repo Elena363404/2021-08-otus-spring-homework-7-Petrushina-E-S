@@ -31,8 +31,8 @@ class AuthorRepositoryTest {
   void shouldInsertAuthor() {
     Author expectedAuthor = new Author(5,"Lermontov");
     authorRepository.save(expectedAuthor);
-    Optional<Author> actualAuthor = authorRepository.findById(expectedAuthor.getId());
-    assertThat(actualAuthor.stream().findFirst().orElse(null)).usingRecursiveComparison().isEqualTo(expectedAuthor);
+    Author actualAuthor = em.find(Author.class, expectedAuthor.getId());
+    assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(expectedAuthor);
   }
 
   @DisplayName("Return author by ID")
@@ -47,11 +47,11 @@ class AuthorRepositoryTest {
   @DisplayName("Delete author by ID")
   @Test
   void shouldCorrectDeleteAuthorById() {
-    Author authorBeforeDelete = authorRepository.findById(AUTHOR_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    Author authorBeforeDelete = em.find(Author.class, AUTHOR_ID_FOR_DELETE);
     assertNotNull(authorBeforeDelete);
     authorRepository.deleteById(AUTHOR_ID_FOR_DELETE);
-    em.remove(authorBeforeDelete);
-    Author authorAfterDelete = authorRepository.findById(AUTHOR_ID_FOR_DELETE).stream().findFirst().orElse(null);
+    em.flush();
+    Author authorAfterDelete = em.find(Author.class, AUTHOR_ID_FOR_DELETE);
     assertNull(authorAfterDelete);
   }
 
