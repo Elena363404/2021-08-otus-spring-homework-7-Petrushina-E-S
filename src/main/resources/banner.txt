@@ -1,0 +1,14 @@
+
+ __                __  __                                   __ 
+|  \              |  \|  \                                 |  \
+${AnsiBackground.235}| WW      ______ _| WW| WW _______         ______   ______ | WW
+${AnsiBackground.RED}| WW     /      |   WW \W /       \       /      \ /      \| WW
+| WW    |  WWWWWW\WWWWWW |  WWWWWWW      |  WWWWWW|  WWWWWW| WW
+| WW    | WW    WW| WW __ \WW    \       | WW  | W| WW  | WW\WW
+| WW____| WWWWWWWW| WW|  \_\WWWWWW\      | WW__| W| WW__/ WW__ 
+| WW     \WW     \ \WW  W|       WW       \WW    WW\WW    W|  \
+ \WWWWWWWW\WWWWWWW  \WWWW \WWWWWWW        _\WWWWWWW \WWWWWW \WW
+                                         |  \__| WW            
+                                          \WW    WW            
+                                           \WWWWWW             
+
